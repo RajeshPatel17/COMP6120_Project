@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMP6120 Final Rajesh Patel rrp0019</title>
     <link rel="stylesheet" href="style.css">
-
-
-
+    <script language="JavaScript" type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body class="home">
@@ -17,15 +15,14 @@
 
     
     <label for="SQL Input">Input SQL Here:</label>
-    <form method="get" name="form" action="api.php">
     <input type="text" id="SQL Input" name="SQL Input" class="inputBox">
-        <div class="buttons">
-            <button type="button" onclick="submit();">Submit Query</button>
-            <button type="button" onclick="document.getElementById('SQL Input').value = '';">Clear Query</button>    
-        </div>
-    </form>
+    <div class="buttons">
+        <button type="button" onclick="submit();">Submit Query</button>
+        <button type="button" onclick="document.getElementById('SQL Input').value = '';">Clear Query</button>    
+    </div>
 
-    <script type="text/javascript">
+    
+    <script>
         function submit(){
             var sqlQuery = document.getElementById("SQL Input").value;
             if (sqlQuery.match(/drop/i)){
@@ -33,11 +30,28 @@
                 document.getElementById("SQL Input").value = '';
             }else{
                 alert(sqlQuery);
-                //const connection = <?php //echo connect();?>;
-                //alert(connection)
+                apiCall(sqlQuery);
             }
+        };
+        function apiCall(query){
+            if($(query).val() != 0){
+                    $.ajax({
+                        url: "api.php", 
+                        type: "get",
+                        data: {
+                            query: query
+                        },
+                        success: function(data) {
+                            if (data != ""){
+                                alert("sent variable to php: " + data);
+                            }
+                        }, 
+                    });
+                }
         }
     </script>
+
+    
 
 </body>
 </html>
