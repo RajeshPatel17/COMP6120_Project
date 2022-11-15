@@ -15,12 +15,12 @@
 
     
     <label for="SQL Input">Input SQL Here:</label>
-    <input type="text" id="SQL Input" name="SQL Input" class="inputBox">
+    <textarea type="text" id="SQL Input" name="SQL Input" class="inputBox"></textarea>
     <div class="buttons">
         <button type="button" onclick="submit();">Submit Query</button>
         <button type="button" onclick="document.getElementById('SQL Input').value = '';">Clear Query</button>    
     </div>
-    <label for="SQL Output">Output:</label>
+        <label for="SQL Output">Output:</label>
     <div id= "output" name="output">
         
     </div>
@@ -35,6 +35,8 @@
                 alert("DROP Statements Are Forbidden");
                 document.getElementById("SQL Input").value = '';
             }else{
+                document.getElementById("output").value = '';
+                document.getElementById("output").innerHTML = '';
                 apiCall(sqlQuery);
             }
         }
