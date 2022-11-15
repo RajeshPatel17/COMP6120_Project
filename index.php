@@ -20,34 +20,64 @@
         <button type="button" onclick="submit();">Submit Query</button>
         <button type="button" onclick="document.getElementById('SQL Input').value = '';">Clear Query</button>    
     </div>
+    <label for="SQL Output">Output:</label>
+    <div id= "output" name="output">
+        
+    </div>
 
     
     <script>
         function submit(){
             var sqlQuery = document.getElementById("SQL Input").value;
             if (sqlQuery.match(/drop/i)){
+                document.getElementById("output").innerText = '';
+                document.getElementById("output").innerHTML = '';
                 alert("DROP Statements Are Forbidden");
                 document.getElementById("SQL Input").value = '';
             }else{
-                alert(sqlQuery);
                 apiCall(sqlQuery);
             }
-        };
+        }
         function apiCall(query){
-            if($(query).val() != 0){
-                    $.ajax({
-                        url: "api.php", 
-                        type: "get",
-                        data: {
-                            query: query
-                        },
-                        success: function(data) {
-                            if (data != ""){
-                                alert("sent variable to php: " + data);
-                            }
-                        }, 
-                    });
+            if(query != 0){
+                $.ajax({
+                    url: "api.php", 
+                    type: "get",
+                    data: {
+                        query: query
+                    },
+                    success: function(data) {
+                        if (data != ""){
+                            print(data);
+                        } else {
+                            print("error");
+                        }
+                    }, 
+                });
+            }
+        }
+        function print(data){
+            try{
+                let jsonData = JSON.parse(data);
+                htmlBuilder = "<table>";
+                htmlBuilder += "<tr>";
+                keys = Object.keys(jsonData[0]);
+                for(var i = 0; i < keys.length; i++){
+                    htmlBuilder += "<th>" + keys[i] + "</th>";
                 }
+                htmlBuilder += "</tr>";
+                for(var i = 0; i < jsonData.length; i++){
+                    for(var j = 0; j < keys.length; j++){
+                        htmlBuilder += "<td>" + jsonData[i][keys[j]] + "</td>";
+                    }
+                    htmlBuilder += "</tr>";
+                }
+                htmlBuilder += "</table>";
+                document.getElementById("output").innerHTML = htmlBuilder;
+            } catch (e) {
+                htmlBuilder = data;
+                document.getElementById("output").innerText = htmlBuilder;
+            }
         }
     </script>
 

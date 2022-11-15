@@ -10,3 +10,9 @@ label {
     display: block;
     text-align: left;
 }
+th {
+    text-align: left;
+}
+tr {
+    text-align: left;
+}
