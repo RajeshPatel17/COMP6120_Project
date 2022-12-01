@@ -33,9 +33,28 @@
      FROM books as b 
      WHERE b.Quantity>10
 5. Show the total price *lastname1 firstname1* has paid for the books.
-
+     SELECT SUM(b.UnitPrice * od.Quantity) 
+     FROM books as b, 
+      customers as c, 
+      orders as o, 
+      order_details as od
+     WHERE c.LastName="lastname1"
+      AND c.FirstName="firstname1"
+      AND c.CustomerID=o.CustomerID 
+      AND o.OrderID=od.OrderID 
+      AND od.BookID=b.BookID
 6. Show the names of the customers who have paid less than $80 in
      totals.
+     SELECT * 
+     FROM books as b, 
+      customers as c, 
+      orders as o, 
+      order_details as od
+WHERE       c.CustomerID=o.CustomerID 
+      AND o.OrderID=od.OrderID 
+      AND od.BookID=b.BookID
+GROUP BY c.CustomerID
+HAVING SUM(b.UnitPrice * od.Quantity) < 80
 7. Show the name of books supplied by *supplier2*.
 8. Show the total price each customer paid and their names.  List the
      result in descending price.
