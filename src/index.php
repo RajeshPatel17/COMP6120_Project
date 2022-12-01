@@ -18,7 +18,8 @@
     <textarea type="text" id="SQL Input" name="SQL Input" class="inputBox"></textarea>
     <div class="buttons">
         <button type="button" onclick="submit();">Submit Query</button>
-        <button type="button" onclick="document.getElementById('SQL Input').value = '';">Clear Query</button>    
+        <button type="button" onclick="document.getElementById('SQL Input').value = '';">Clear Query</button>
+        <button type="button" onclick="clearOutput();">Clear Output</button>   
     </div>
         <label for="SQL Output">Output:</label>
     <div id= "output" name="output">
@@ -27,16 +28,17 @@
 
     
     <script>
+        function clearOutput(){
+            document.getElementById("output").innerText = '';
+            document.getElementById("output").innerHTML = '';
+        }
         function submit(){
             var sqlQuery = document.getElementById("SQL Input").value;
             if (sqlQuery.match(/drop/i)){
-                document.getElementById("output").innerText = '';
-                document.getElementById("output").innerHTML = '';
+                clearOutput();
                 alert("DROP Statements Are Forbidden");
                 document.getElementById("SQL Input").value = '';
             }else{
-                document.getElementById("output").value = '';
-                document.getElementById("output").innerHTML = '';
                 apiCall(sqlQuery);
             }
         }
@@ -75,10 +77,13 @@
                     htmlBuilder += "</tr>";
                 }
                 htmlBuilder += "</table>";
-                document.getElementById("output").innerHTML = htmlBuilder;
+                document.getElementById("output").innerHTML += htmlBuilder;
             } catch (e) {
+                clearOutput();
                 htmlBuilder = data;
+                alert("Error with SQL Statement");
                 document.getElementById("output").innerText = htmlBuilder;
+
             }
         }
     </script>

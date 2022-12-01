@@ -52,6 +52,15 @@
         } else {
             echo "Error with SQL Create Statement";
         }
+    } elseif(preg_match("/show/i", $input)) {
+        $results = $conn->query($input);
+        if ($results){
+            $results->setFetchMode(PDO::FETCH_ASSOC);
+            $row = $results->fetchAll();
+            echo json_encode($row);
+        } else {
+            echo "Error with SQL Show Statement";
+        }
     } else {
         echo "Invalid SQL Statement";
     }
