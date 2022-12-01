@@ -79,10 +79,9 @@
                 htmlBuilder += "</table>";
                 document.getElementById("output").innerHTML += htmlBuilder;
             } catch (e) {
-                clearOutput();
-                htmlBuilder = data;
+                htmlBuilder = "<br>" + data + "<br>";      
                 alert("Error with SQL Statement");
-                document.getElementById("output").innerText = htmlBuilder;
+                document.getElementById("output").innerHTML += htmlBuilder;
             }
         }
     </script>
