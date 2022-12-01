@@ -83,7 +83,6 @@
                 htmlBuilder = data;
                 alert("Error with SQL Statement");
                 document.getElementById("output").innerText = htmlBuilder;
-
             }
         }
     </script>

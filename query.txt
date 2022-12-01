@@ -1,10 +1,39 @@
 1. Show the subject names of books supplied by *supplier2*.
-2. Show the name and price of the most expensive book supplied by
-     *supplier3*.
-3. Show the unique names of all books ordered by *lastname1
-     firstname1*.
+     SELECT sub.CategoryName
+     FROM subjects as sub, 
+      books as b, 
+      suppliers as sup 
+     WHERE sup.CompanyName="supplier2"
+      AND b.SupplierID=sup.SupplierID
+      AND b.SubjectID=sub.SubjectID
+2. Show the name and price of the most expensive book supplied by *supplier3*.
+     SELECT b1.Title, 
+      b1.UnitPrice as Price
+     FROM books as b1 
+     WHERE b1.UnitPrice=
+          (SELECT MAX(b.UnitPrice) 
+          FROM books as b, suppliers as s 
+          WHERE s.CompanyName="supplier3" 
+           AND s.supplierID=b.SupplierID)
+3. Show the unique names of all books ordered by *lastname1 firstname1*.
+     SELECT DISTINCT b.Title
+     FROM books as b, 
+      customers as c, 
+      orders as o, 
+      order_details as od
+     WHERE 
+      c.CustomerID=o.CustomerID 
+      AND o.OrderID=od.OrderID 
+      AND od.BookID=b.BookID
+     ORDER BY
+      c.LastName, 
+      c.FirstName
 4. Show the title of books which have more than 10 units in stock.
+     SELECT b.Title
+     FROM books as b 
+     WHERE b.Quantity>10
 5. Show the total price *lastname1 firstname1* has paid for the books.
+
 6. Show the names of the customers who have paid less than $80 in
      totals.
 7. Show the name of books supplied by *supplier2*.
