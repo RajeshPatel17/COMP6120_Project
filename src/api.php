@@ -46,9 +46,10 @@
             echo "Error with SQL Delete Statement";
         }
     } elseif(preg_match("/create/i", $input)) {
+
         $results = $conn->exec($input);
-        if ($results){
-            echo "{$results} table(s) created";
+        if ($results==0){
+            echo "Table(s) created";
         } else {
             echo "Error with SQL Create Statement";
         }

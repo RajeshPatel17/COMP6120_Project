@@ -63,7 +63,8 @@
         function print(data){
             try{
                 let jsonData = JSON.parse(data);
-                htmlBuilder = "<table>";
+                htmlBuilder = "<br>" + jsonData.length + " row(s) selected" + "<br>"
+                htmlBuilder += "<table>";
                 htmlBuilder += "<tr>";
                 keys = Object.keys(jsonData[0]);
                 for(var i = 0; i < keys.length; i++){
@@ -79,8 +80,7 @@
                 htmlBuilder += "</table>";
                 document.getElementById("output").innerHTML += htmlBuilder;
             } catch (e) {
-                htmlBuilder = "<br>" + data + "<br>";      
-                alert("Error with SQL Statement");
+                htmlBuilder = "<br>" + data + "<br>";
                 document.getElementById("output").innerHTML += htmlBuilder;
             }
         }
